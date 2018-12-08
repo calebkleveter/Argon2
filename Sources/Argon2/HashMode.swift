@@ -1,7 +1,7 @@
 extension Argon2 {
     
     /// The hashing mode to use on the bytes passed into the hasher.
-    public enum HashMode: String, Hashable, CaseIterable, Codable {
+    public enum HashMode: Int, Hashable, CaseIterable, Codable {
         
         /// Uses data-depending memory access, which makes it highly resistant against GPU cracking attacks and suitable for
         /// applications with no threats from side-channel timing attacks.
