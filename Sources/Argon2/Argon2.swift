@@ -1,11 +1,8 @@
 import Foundation
 import CArgon2
 
-public typealias Byte = UInt8
-public typealias Bytes = [Byte]
-
 public struct Argon2 {
-    public func hash(_ bytes: Bytes, context: Context = .default)throws -> Bytes {
+    public func hash(_ bytes: [UInt8], context: Context = .default)throws -> [UInt8] {
         var result: [Int8] = []
         
         let error = context.mode.method(

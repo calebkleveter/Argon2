@@ -20,7 +20,7 @@ extension Argon2 {
         public var parallelism: UInt32
         
         /// The hash's salt.
-        public var salt: Bytes
+        public var salt: [UInt8]
         
         /// The count of elements in the resulting hashed bytes array.
         public var hashLength: UInt32
@@ -34,7 +34,7 @@ extension Argon2 {
         ///   - parallelism:
         ///   - salt:
         ///   - hashLength:
-        public init(mode: HashMode, iterations: UInt32, memory: UInt32, parallelism: UInt32, salt: Bytes, hashLength: UInt32) {
+        public init(mode: HashMode, iterations: UInt32, memory: UInt32, parallelism: UInt32, salt: [UInt8], hashLength: UInt32) {
             self.mode = mode
             self.iterations = iterations
             self.memory = memory
