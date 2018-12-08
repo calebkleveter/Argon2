@@ -21,7 +21,7 @@ extension Argon2 {
         case id
         
         /// The C hashing function that is used for the given hashing mode.
-        public var method: (UInt32, UInt32, UInt32, UnsafeRawPointer, Int, UnsafeRawPointer, Int, Int, UnsafeMutablePointer<Int8>, Int) -> Int32 {
+        public var method: (UInt32, UInt32, UInt32, UnsafeRawPointer?, Int, UnsafeRawPointer?, Int, Int, UnsafeMutablePointer<Int8>?, Int) -> Int32 {
             switch self {
             case .d: return argon2d_hash_encoded
             case .i: return argon2i_hash_encoded
