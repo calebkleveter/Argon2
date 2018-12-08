@@ -29,7 +29,7 @@ extension Argon2 {
             }
         }
         
-        /// The C verification functions used for verifying that known string matches a hash.
+        /// The C verification functions used for verifying that a known string matches a hash.
         public var verify: (UnsafePointer<Int8>, UnsafeRawPointer, Int) -> Int32 {
             switch self {
             case .d: return argon2d_verify
