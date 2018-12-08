@@ -28,6 +28,14 @@ public struct Argon2 {
         return result.map(UInt8.init)
     }
     
+    public func verify(_ bytes: inout [Int8], against hash: [Int8], mode: HashMode = .i)throws {
+        let error = mode.verify(hash, bytes, bytes.count)
+        
+        guard error == 0 else {
+            throw Argon2.Error(code: error)
+        }
+    }
+    
     public func length(of context: Context) -> Int {
         return argon2_encodedlen(
             context.iterations,
