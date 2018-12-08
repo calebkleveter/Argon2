@@ -28,5 +28,14 @@ extension Argon2 {
             case .id: return argon2id_hash_encoded
             }
         }
+        
+        /// The C verification functions used for verifying that known string matches a hash.
+        public var verify: (UnsafePointer<Int8>, UnsafeRawPointer, Int) -> Int32 {
+            switch self {
+            case .d: return argon2d_verify
+            case .i: return argon2i_verify
+            case .id: return argon2id_verify
+            }
+        }
     }
 }
