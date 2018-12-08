@@ -1,3 +1,5 @@
+import CArgon2
+
 extension Argon2 {
     
     /// The hashing mode to use on the bytes passed into the hasher.
@@ -17,5 +19,14 @@ extension Argon2 {
         /// A hybrid of `i` and `d`, using a combination of data-depending and data-independent memory accesses, which gives some of
         /// `i`'s resistance to side-channel cache timing attacks and much of `d`'s resistance to GPU cracking attacks.
         case id
+        
+        /// The C hashing function that is used for the given hashing mode.
+        public var method: (UInt32, UInt32, UInt32, UnsafeRawPointer, Int, UnsafeRawPointer, Int, Int, UnsafeMutablePointer<Int8>, Int) -> Int32 {
+            switch self {
+            case .d: return argon2d_hash_encoded
+            case .i: return argon2i_hash_encoded
+            case .id: return argon2id_hash_encoded
+            }
+        }
     }
 }
