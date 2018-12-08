@@ -13,25 +13,27 @@ public struct Argon2 {
     /// - Returns: The hashed and encoded byte array.
     public static func hash(_ bytes: [UInt8], context: Context = .default)throws -> [UInt8] {
         var result: [Int8] = []
-        
-        let error = context.mode.method(
-            context.iterations,
-            context.memory,
-            context.parallelism,
-            bytes,
-            bytes.count,
-            context.salt,
-            context.salt.count,
-            Int(context.hashLength),
-            &result,
-            self.length(of: context)
-        )
-        
-        guard error == 0 else {
-            throw Argon2.Error(code: error)
+        return try result.withUnsafeMutableBufferPointer { buffer -> [UInt8] in
+            let length = self.length(of: context)
+            let error = context.mode.method(
+                context.iterations,
+                context.memory,
+                context.parallelism,
+                bytes,
+                bytes.count,
+                context.salt,
+                context.salt.count,
+                Int(context.hashLength),
+                buffer.baseAddress,
+                length
+            )
+            
+            guard error == 0 else {
+                throw Argon2.Error(code: error)
+            }
+            
+            return Array(UnsafeMutableBufferPointer.init(start: buffer.baseAddress, count: length)).map(UInt8.init(bitPattern:))
         }
-        
-        return result.map(UInt8.init)
     }
     
     /// Hashes a stringusing the Argon 2 algorithm.
