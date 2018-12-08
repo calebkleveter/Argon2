@@ -2,7 +2,7 @@ import Foundation
 import CArgon2
 
 public struct Argon2 {
-    public func hash(_ bytes: [UInt8], context: Context = .default)throws -> [UInt8] {
+    public static func hash(_ bytes: [UInt8], context: Context = .default)throws -> [UInt8] {
         var result: [Int8] = []
         
         let error = context.mode.method(
@@ -25,7 +25,7 @@ public struct Argon2 {
         return result.map(UInt8.init)
     }
     
-    public func verify(_ bytes: inout [Int8], against hash: [Int8], mode: HashMode = .i)throws {
+    public static func verify(_ bytes: inout [Int8], against hash: [Int8], mode: HashMode = .i)throws {
         let error = mode.verify(hash, bytes, bytes.count)
         
         guard error == 0 else {
@@ -33,7 +33,7 @@ public struct Argon2 {
         }
     }
     
-    public func length(of context: Context) -> Int {
+    public static  func length(of context: Context) -> Int {
         return argon2_encodedlen(
             context.iterations,
             context.memory,
